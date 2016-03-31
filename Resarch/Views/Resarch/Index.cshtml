@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>訂單查詢</h2>
+<html>
+<body>
+    @using (Html.BeginForm("Index", "Resarch", FormMethod.Post))
+    {
+
+        <table class="table table-bordered" border-collapse="collapse" style="width:100%">
+            <tr>
+                <td>訂單編號</td>
+                <td colspan="3" class="info"><input type="text" name="OrderID" /></td>
+            </tr>
+
+            <tr>
+                <td>客戶名稱</td>
+                <td colspan="3"><input type="text" name="CustName" /></td>
+            </tr>
+            <tr>
+                <td>負責員工</td>
+                <td colspan="3">
+                    <select name="emp">
+                        <option></option>
+                        @foreach (var item in ViewBag.name)
+                        {
+                            <option>@item</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>負責公司</td>
+                <td colspan="3">
+                    <select name="company">
+                        <option></option>
+                        @foreach (var item in ViewBag.company)
+                        {
+                            <option>@item</option>
+                        }
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>訂購日期</td>
+                <td><input type="date" name="OrderDate" /></td>
+                <td>出貨日期</td>
+                <td><input type="date" name="ShipperDate" /></td>
+
+
+            </tr>
+            <tr>
+                <td>需要日期</td>
+                <td colspan="3"><input type="date" name="NeedDate" /></td>
+
+
+
+            </tr>
+
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <input type="submit" value="查詢" class="btn btn-default" />
+                    <input type="reset" value="清除" class="btn btn-default" />
+                    <button class="btn btn-default">新增訂單</button>
+                </td>
+            </tr>
+
+
+        </table>
+
+    }
+    
+</body>
+
+</html>
+
