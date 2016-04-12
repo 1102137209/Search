@@ -6,7 +6,7 @@
 
 <h2>查詢結果</h2>
 
-    <table class="table table-bordered" width="100%">
+    <table class="table table-bordered" style="width:100%">
         <tr class="info">
             <td align="center">訂單編號</td>
             <td align="center">客戶名稱</td>
@@ -25,13 +25,16 @@
                 <td align="center">@item.ShippedDate</td>
 
 
-                <td align="center"><button class="btn btn-info">修改</button></td>
+                <td align="center"><a href="update?orderID=@item.OrderID">修改</a></td>
                 <td align="center"><button class="btn btn-danger">刪除</button></td>
 
             </tr>
         }
+       
+           
+       
 
-
-    </table>
+</table>
+<a href="Index">回前一頁</a>
 
 
