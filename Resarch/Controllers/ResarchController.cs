@@ -143,6 +143,16 @@ namespace Resarch.Controllers
             List<Products> Product = db.Products.ToList();
             ViewBag.Product = Product;
 
+            //計算總金額
+            double total = 0;
+            foreach (var item in OrderDetails) {
+
+                total +=total+Convert.ToDouble(item.UnitPrice) * item.Qty;
+
+            }
+            total = Math.Round(total + Convert.ToDouble(data.Freight));
+            ViewBag.total = total;
+
             return View();
         }
         /// <summary>
@@ -206,6 +216,54 @@ namespace Resarch.Controllers
             data.ShipPostalCode = AddressNum;
             data.ShipAddress = ShipAddress;
             data.ShipName = ShipDesc;
+            
+            //知道商品新增幾條
+            int count = 0;
+
+
+
+            for (int i = 1; i < input.Count; i++)
+            {
+
+                if (input.AllKeys.Contains("productName[" + i + "]"))
+                {
+
+                    count++;
+
+                }
+            }
+
+            //列出OrderID所有的資料
+            List<OrderDetails> IDdata = db.OrderDetails.Where(x => x.OrderID == data.OrderID).ToList();
+
+
+            int j = 0;
+            foreach(var tmp in IDdata)
+            {
+
+                j++;
+                //修改資料庫裡面的資料
+                tmp.ProductID = Convert.ToInt32(input["productName[" + j + "]"]);
+                tmp.UnitPrice = Convert.ToDecimal(input["price[" + j + "]"]);
+                tmp.Qty = Convert.ToInt16(input["quanty[" + j + "]"]);
+
+                data.OrderDetails.Add(tmp);
+            }
+
+
+            for (int i = j+1; i <= count; i++)
+            {
+
+                OrderDetails ProductDetails = new OrderDetails();
+
+                ProductDetails.OrderID = data.OrderID;
+                ProductDetails.ProductID = Convert.ToInt32(input["productName[" + i + "]"]);
+                ProductDetails.UnitPrice = Convert.ToDecimal(input["price[" + i + "]"]);
+                ProductDetails.Qty = Convert.ToInt16(input["quanty[" + i + "]"]);
+
+                data.OrderDetails.Add(ProductDetails);
+
+            }
 
             db.SaveChanges();
 
@@ -234,6 +292,9 @@ namespace Resarch.Controllers
 
             return View();
         }
+
+
+      
 
         [HttpPost]
         public ActionResult add(FormCollection input)
@@ -305,5 +366,23 @@ namespace Resarch.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        //刪除
+        public void Delete(int OrderID)
+        {
+            //找到OrderID
+            Orders order = db.Orders.Find(OrderID);
+
+            List<OrderDetails> orderDetail = db.OrderDetails.Where(x => x.OrderID == OrderID).ToList();
+
+
+            db.Orders.Remove(order);
+            db.OrderDetails.RemoveRange(orderDetail);
+            db.SaveChanges();
+
+
+        }
+        
     }
 }

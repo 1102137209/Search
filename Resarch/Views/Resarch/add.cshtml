@@ -10,16 +10,16 @@
     {
         <h2>新增訂單</h2>
 
-        <table border="1" style="width:100%" border-collapse="collapse">
+        <table border="1" style="width:100%" border-collapse="collapse" class="table table-bordered">
             <tr>
-                <td>訂單編號</td>
-                <td colspan="3"><input type="text" name="OrderID" value="@ViewBag.OrderID" readonly="readonly" /></td>
+                <td align="center">訂單編號</td>
+                <td colspan="3"><input type="text" name="OrderID" value="@ViewBag.OrderID" class="form-control" readonly="readonly" /></td>
             </tr>
             <tr>
-                <td>客戶名稱</td>
+                <td align="center">客戶名稱</td>
                 <td colspan="3">
-                    <select name="CustName">
-                        <option selected value="@ViewBag.Custname">請選擇客戶</option>
+                    <select name="CustName" class="form-control">
+                        <option selected value="@ViewBag.Custname" class="form-control">請選擇客戶</option>
                         @foreach (var item in (List<Resarch.Models.Customers>)ViewBag.Custname)
                         {
                             <option value="@item.CustomerID">@item.CompanyName</option>
@@ -30,9 +30,9 @@
                 </td>
             </tr>
             <tr>
-                <td>負責員工名稱</td>
+                <td align="center">負責員工名稱</td>
                 <td colspan="3">
-                    <select name="EmpName">
+                    <select name="EmpName" class="form-control">
                         <option selected value="@ViewBag.EmpName">請選擇員工</option>
                         @foreach (var item in (List<Resarch.Models.Employees>)ViewBag.EmpName)
                         {
@@ -43,19 +43,19 @@
                 </td>
             </tr>
             <tr>
-                <td>訂單日期</td>
+                <td align="center">訂單日期</td>
                 <td><input value="" type="date" name="OrderDate" /></td>
-                <td>需要日期</td>
+                <td align="center">需要日期</td>
                 <td><input value="e" type="date" name="NeedDate" /></td>
             </tr>
             <tr>
-                <td>出貨日期</td>
+                <td align="center">出貨日期</td>
                 <td colspan="3"><input value="" type="date" name="ShipDate" /></td>
             </tr>
             <tr>
-                <td>出貨公司名稱</td>
+                <td align="center">出貨公司名稱</td>
                 <td colspan="3">
-                    <select name="ComName">
+                    <select name="ComName" class="form-control">
                         <option selected value="@ViewBag.ShipName">請選擇出貨公司</option>
                         @foreach (var item in (List<Resarch.Models.Shippers>)ViewBag.ShipName)
                         {
@@ -65,38 +65,39 @@
                 </td>
             </tr>
             <tr>
-                <td>運費</td>
-                <td colspan="3"><input type="text" name="Money" value="" /></td>
+                <td align="center">運費</td>
+                <td colspan="3"><input type="text" class="form-control" name="Money" value="" oninput="changeTotal()"/></td>
             </tr>
 
             <tr>
-                <td>出貨國家</td>
-                <td><input type="text" name="ShipCountry" value="" /></td>
-                <td>出貨城市</td>
-                <td><input type="text" name="ShipCity" value="" /></td>
+                <td align="center">出貨國家</td>
+                <td><input type="text" name="ShipCountry" class="form-control" value="" /></td>
+                <td align="center">出貨城市</td>
+                <td><input type="text" name="ShipCity" class="form-control" value="" /></td>
             </tr>
             <tr>
-                <td>出貨地區</td>
-                <td><input type="text" name="ShipArea" value="" /></td>
-                <td>郵遞區號</td>
-                <td><input type="text" name="AddressNum" value="" /></td>
+                <td align="center">出貨地區</td>
+                <td><input type="text" name="ShipArea" class="form-control" value="" /></td>
+                <td align="center">郵遞區號</td>
+                <td><input type="text" name="AddressNum" class="form-control" value="" /></td>
             </tr>
             <tr>
-                <td>出貨地址</td>
-                <td><input type="text" name="ShipAddress" value="" /></td>
-                <td>出貨說明</td>
-                <td><input type="text" name="ShipDesc" value="" /></td>
+                <td align="center">出貨地址</td>
+                <td><input type="text" name="ShipAddress" class="form-control" value="" /></td>
+                <td align="center">出貨說明</td>
+                <td><input type="text" name="ShipDesc" class="form-control" value="" /></td>
             </tr>
 
             <tr>
-                <td>訂單金額總計</td>
-                <td colspan="3"><input type="text" name="Total" /></td>
+                <td align="center">訂單金額總計</td>
+                
+                <td colspan="3"><input type="text"class="form-control" id="subtotal" value="@ViewBag.total" /></td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="3">
-                    <input type="submit" value="存檔" />
-                    <button>回前一頁</button>
+                <td colspan="3" >
+                    <input type="submit" value="存檔" class="btn btn-success"/>
+                    <input type="button" value="回前一頁" class="btn btn-primary" onclick="goback()" >
                     
                 </td>
             </tr>
@@ -110,13 +111,14 @@
         <h2>訂單明細</h2>
 
         <br />
-        <input type="button" value="新增訂單" onclick="addrow()" />
-        <table id="TableId" border="1" style="width:100%" border-collapse="collapse">
+        <input type="button" value="新增訂單" class="btn btn-primary" onclick="addrow()" />
+        <br />
+        <table id="TableId" border="1" style="width:100%" border-collapse="collapse" class="table table-bordered">
             <tr>
-                <td>商品</td>
-                <td>單價</td>
-                <td>數量</td>
-                <td>小計</td>
+                <td align="center">商品</td>
+                <td align="center">單價</td>
+                <td align="center">數量</td>
+                <td align="center">小計</td>
                 <td></td>
             </tr>
 
@@ -130,7 +132,7 @@
 
     var count = document.getElementById("TableId").rows.length - 1;
 
- 
+
     function addrow(){
                 count++;
                 var TableId = document.getElementById("TableId");
@@ -143,7 +145,7 @@
                 select.setAttribute("onchange", "ChangeProduct('product" + count + "')");
                 select.setAttribute("name", "productName[" + count + "]");
                 var price = document.createElement("td");
-                
+
                 var quanty = document.createElement("td");
 
                 var total = document.createElement("td");
@@ -153,7 +155,8 @@
                 var line = document.createElement("td");
 
                 var cancel = document.createElement("button");
-                cancel.setAttribute("id","cancel"+ count);
+                cancel.setAttribute("id", "cancel" + count);
+                cancel.setAttribute("class", "btn btn-danger");
 
 
              var option = new Option("請選擇商品", "");
@@ -181,7 +184,7 @@
 
             ///放入總計
             tr.appendChild(total);
-            total.innerHTML = "<input type='Text' id='total" + count + "' name='total ' value='0' />";
+            total.innerHTML = "<input type='Text' id='total" + count + "' name='total' value='0' />";
 
             ///放入取消按鈕
             tr.appendChild(line);
@@ -225,7 +228,7 @@
 
                 ChangePrice(select.options[i].value,select.id);
 
-
+                changeTotal();
                 break;
 
             }
@@ -268,6 +271,26 @@
 
         subtotal.value=Math.round(qty.value*price.value);
 
+        changeTotal();
+    }
+
+    function goback() {
+
+        history.back();
+    }
+
+    function changeTotal() {
+
+        var value = 0;
+        var length = document.getElementById("TableId").rows.length - 1;
+        var shipCost = document.getElementsByName("Money")[0].value;
+
+        for (var i = 0; i < length; i++) {
+            value = Number(value) + Number(document.getElementsByName("total")[i].value);
+            console.log(value);
+        }
+        value += Number(shipCost);
+        document.getElementById("subtotal").value = Math.round(value);
 
     }
 

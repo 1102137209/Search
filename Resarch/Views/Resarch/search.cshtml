@@ -3,8 +3,9 @@
     ViewBag.Title = "search";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>查詢結果</h2>
+<html>
+<body>
+    <h2>查詢結果</h2>
 
     <table class="table table-bordered" style="width:100%">
         <tr class="info">
@@ -25,16 +26,44 @@
                 <td align="center">@item.ShippedDate</td>
 
 
-                <td align="center"><a href="update?orderID=@item.OrderID">修改</a></td>
-                <td align="center"><button class="btn btn-danger">刪除</button></td>
+                <td align="center"><a href="update?orderID=@item.OrderID"><input type="button" value="修改" class="btn btn-info" /></a></td>
+                <td align="center"> <input type="button" value="刪除"  class="btn btn-danger" onclick="DelOrder(@item.OrderID)"></td>
 
-            </tr>
+</tr>
         }
-       
-           
-       
-
-</table>
-<a href="Index">回前一頁</a>
 
 
+
+
+    </table>
+    <table>
+        <tr>
+            <td align="center"><a href="Index"><input type="button" value="回前一頁" class="btn btn-default" /></a></td>
+        </tr>
+
+
+    </table>
+
+    </body>
+</html>
+
+<script>
+
+    function DelOrder(OrderID) {
+
+
+        $.ajax({
+            type: "GET",
+            url: "/Resarch/Delete",
+            data: {
+                OrderID: OrderID
+            },
+            contentType: "application/json charset=utf-8",
+            dataType: "json",
+
+        });
+
+        alert("刪除成功");
+        document.location.reload();
+    }
+</script>
