@@ -216,8 +216,10 @@ namespace Resarch.Controllers
             data.ShipPostalCode = AddressNum;
             data.ShipAddress = ShipAddress;
             data.ShipName = ShipDesc;
-            
+
             //知道商品新增幾條
+            List<OrderDetails> orderDetail = db.OrderDetails.Where(x => x.OrderID == data.OrderID).ToList();
+            db.OrderDetails.RemoveRange(orderDetail);
             int count = 0;
 
 
@@ -233,25 +235,8 @@ namespace Resarch.Controllers
                 }
             }
 
-            //列出OrderID所有的資料
-            List<OrderDetails> IDdata = db.OrderDetails.Where(x => x.OrderID == data.OrderID).ToList();
 
-
-            int j = 0;
-            foreach(var tmp in IDdata)
-            {
-
-                j++;
-                //修改資料庫裡面的資料
-                tmp.ProductID = Convert.ToInt32(input["productName[" + j + "]"]);
-                tmp.UnitPrice = Convert.ToDecimal(input["price[" + j + "]"]);
-                tmp.Qty = Convert.ToInt16(input["quanty[" + j + "]"]);
-
-                data.OrderDetails.Add(tmp);
-            }
-
-
-            for (int i = j+1; i <= count; i++)
+            for (int i = 1; i <= count; i++)
             {
 
                 OrderDetails ProductDetails = new OrderDetails();
@@ -338,6 +323,8 @@ namespace Resarch.Controllers
             db.Orders.Add(data);
 
             //找到商品資料有幾筆
+            List<OrderDetails> OrderDetail = db.OrderDetails.Where(x => x.OrderID == data.OrderID).ToList();
+            db.OrderDetails.RemoveRange(OrderDetail);
             int count = 0;
 
             for(int i=1;i< input.Count; i++){
@@ -349,7 +336,8 @@ namespace Resarch.Controllers
                 }
             }
 
-            for(int i = 1; i <= count; i++) {
+            for (int i = 1; i <= count; i++)
+            {
 
                 OrderDetails ProductDetails = new OrderDetails();
 

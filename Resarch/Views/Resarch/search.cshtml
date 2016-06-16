@@ -48,6 +48,29 @@
 </html>
 
 <script>
+    $(document).ready(function () {
+        $(".text").kendoMaskedTextBox();
+        $(".OrderID").kendoNumericTextBox({
+            format: "#",
+            min:10248,
+        });
+        $(".select").kendoComboBox();
+        $(".date").kendoDatePicker({
+            format:"yyyy/MM/dd",animation: {
+                close: {
+                    effects: "fadeOut zoom:out",
+                    duration: 300
+                },
+                open: {
+                    effects: "fadeIn zoom:in",
+                    duration: 300
+                }
+            }
+
+
+        });
+        $(".btn").kendoButton();
+    })
 
     function DelOrder(OrderID) {
 
@@ -65,5 +88,7 @@
 
         alert("刪除成功");
         document.location.reload();
+
+        
     }
 </script>

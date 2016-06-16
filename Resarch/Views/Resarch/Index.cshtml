@@ -15,17 +15,17 @@
         <table class="table table-bordered" border-collapse="collapse" style="width:100%">
             <tr>
                 <td>訂單編號</td>
-                <td colspan="3" class="info"><input type="text" name="OrderID" class="form-control" /></td>
+                <td colspan="3" class="info"><input type="text" name="OrderID" class="OrderID"/></td>
             </tr>
 
             <tr>
                 <td>客戶名稱</td>
-                <td colspan="3"><input type="text" name="CustName" class="form-control" /></td>
+                <td colspan="3"><input type="text" name="CustName" class="form-control text" /></td>
             </tr>
             <tr>
                 <td>負責員工</td>
                 <td colspan="3">
-                    <select name="emp" class="form-control">
+                    <select name="emp" class="form-control select">
                         <option></option>
                         @foreach (var item in ViewBag.name)
                         {
@@ -37,7 +37,7 @@
             <tr>
                 <td>負責公司</td>
                 <td colspan="3">
-                    <select name="company" class="form-control">
+                    <select name="company" class="form-control select">
                         <option></option>
                         @foreach (var item in ViewBag.company)
                         {
@@ -49,15 +49,15 @@
             </tr>
             <tr>
                 <td>訂購日期</td>
-                <td><input type="date" name="OrderDate" class="form-control"/></td>
+                <td><input type="date" name="OrderDate" class="form-control date"/></td>
                 <td>出貨日期</td>
-                <td><input type="date" name="ShipperDate" class="form-control"/></td>
+                <td><input type="date" name="ShipperDate" class="form-control date"/></td>
 
 
             </tr>
             <tr>
                 <td>需要日期</td>
-                <td colspan="3"><input type="date" name="NeedDate" class="form-control" /></td>
+                <td colspan="3"><input type="date" name="NeedDate" class="form-control date" /></td>
 
 
 
@@ -69,15 +69,44 @@
                     <input type="submit" value="查詢" class="btn btn-default" />
                     <input type="reset" value="清除" class="btn btn-default" />
                     <a href="/Resarch/add"><input type="button" value="新增訂單" class="btn btn-default" /></a>
+                    
                 </td>
             </tr>
-          
-            
         </table>
-
     }
     
 </body>
 
 </html>
 
+<script>
+    $(document).ready(function () {
+        $(".text").kendoMaskedTextBox();
+        $(".OrderID").kendoNumericTextBox({
+            format: "#",
+            min:10248,
+        });
+        $(".select").kendoComboBox({
+
+            filter: "contains",
+            suggest:true,
+        });
+        $(".date").kendoDatePicker({
+            format:"yyyy/MM/dd",animation: {
+                close: {
+                    effects: "fadeOut zoom:out",
+                    duration: 300
+                },
+                open: {
+                    effects: "fadeIn zoom:in",
+                    duration: 300
+                }
+            }
+
+
+        });
+        $(".btn").kendoButton();
+    })
+   
+
+</script>

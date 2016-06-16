@@ -13,12 +13,12 @@
         <table border="1" style="width:100%" border-collapse="collapse" class="table table-bordered">
             <tr>
                 <td align="center">訂單編號</td>
-                <td colspan="3"><input type="text" name="OrderID" value="@ViewBag.OrderID" class="form-control" readonly="readonly" /></td>
+                <td colspan="3"><input type="text" name="OrderID" value="@ViewBag.OrderID" class="form-control text" readonly="readonly" /></td>
             </tr>
             <tr>
                 <td align="center">客戶名稱</td>
                 <td colspan="3">
-                    <select name="CustName" class="form-control">
+                    <select name="CustName" class="form-control select" required>
                         <option selected value="@ViewBag.Custname" class="form-control">請選擇客戶</option>
                         @foreach (var item in (List<Resarch.Models.Customers>)ViewBag.Custname)
                         {
@@ -31,8 +31,8 @@
             </tr>
             <tr>
                 <td align="center">負責員工名稱</td>
-                <td colspan="3">
-                    <select name="EmpName" class="form-control">
+                <td colspan="3" >
+                    <select name="EmpName" class="form-control select" required>
                         <option selected value="@ViewBag.EmpName">請選擇員工</option>
                         @foreach (var item in (List<Resarch.Models.Employees>)ViewBag.EmpName)
                         {
@@ -43,19 +43,19 @@
                 </td>
             </tr>
             <tr>
-                <td align="center">訂單日期</td>
-                <td><input value="" type="date" name="OrderDate" /></td>
+                <td align="center" >訂單日期</td>
+                <td><input value="" type="date" name="OrderDate" class="date" required/></td>
                 <td align="center">需要日期</td>
-                <td><input value="e" type="date" name="NeedDate" /></td>
+                <td><input value="" type="date" name="NeedDate" class="date" required/></td>
             </tr>
             <tr>
                 <td align="center">出貨日期</td>
-                <td colspan="3"><input value="" type="date" name="ShipDate" /></td>
+                <td colspan="3"><input value="" type="date" name="ShipDate"  class="date" required/></td>
             </tr>
             <tr>
                 <td align="center">出貨公司名稱</td>
                 <td colspan="3">
-                    <select name="ComName" class="form-control">
+                    <select name="ComName" class="form-control select" required>
                         <option selected value="@ViewBag.ShipName">請選擇出貨公司</option>
                         @foreach (var item in (List<Resarch.Models.Shippers>)ViewBag.ShipName)
                         {
@@ -66,32 +66,32 @@
             </tr>
             <tr>
                 <td align="center">運費</td>
-                <td colspan="3"><input type="text" class="form-control" name="Money" value="" oninput="changeTotal()"/></td>
+                <td colspan="3"><input type="text" class="Money" name="Money" value="0" oninput="changeTotal()" sytle="direction:rtl"/></td>
             </tr>
 
             <tr>
                 <td align="center">出貨國家</td>
-                <td><input type="text" name="ShipCountry" class="form-control" value="" /></td>
+                <td><input type="text" name="ShipCountry" class="form-control text" value="" /></td>
                 <td align="center">出貨城市</td>
-                <td><input type="text" name="ShipCity" class="form-control" value="" /></td>
+                <td><input type="text" name="ShipCity" class="form-control text" value="" /></td>
             </tr>
             <tr>
                 <td align="center">出貨地區</td>
-                <td><input type="text" name="ShipArea" class="form-control" value="" /></td>
+                <td><input type="text" name="ShipArea" class="form-control text" value="" /></td>
                 <td align="center">郵遞區號</td>
-                <td><input type="text" name="AddressNum" class="form-control" value="" /></td>
+                <td><input type="text" name="AddressNum" class="form-control text" value="" /></td>
             </tr>
             <tr>
                 <td align="center">出貨地址</td>
-                <td><input type="text" name="ShipAddress" class="form-control" value="" /></td>
+                <td><input type="text" name="ShipAddress" class="form-control text" value="" /></td>
                 <td align="center">出貨說明</td>
-                <td><input type="text" name="ShipDesc" class="form-control" value="" /></td>
+                <td><input type="text" name="ShipDesc" class="form-control text" value="" /></td>
             </tr>
 
             <tr>
                 <td align="center">訂單金額總計</td>
                 
-                <td colspan="3"><input type="text"class="form-control" id="subtotal" value="@ViewBag.total" /></td>
+                <td colspan="3"><input type="text"class="form-control text" id="subtotal" value="@ViewBag.total" /></td>
             </tr>
             <tr>
                 <td></td>
@@ -129,6 +129,37 @@
 </html>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $(".text").kendoMaskedTextBox();
+        $(".Money").kendoNumericTextBox({
+            format: "c2",
+
+        });
+        $(".OrderID").kendoNumericTextBox({
+            format: "#",
+            min: 10248,
+        });
+        $(".select").kendoComboBox({
+
+            filter: "contains",
+            suggest: true,
+        });
+        $(".date").kendoDatePicker({
+            format: "yyyy/MM/dd", animation: {
+                close: {
+                    effects: "fadeOut zoom:out",
+                    duration: 300
+                },
+                open: {
+                    effects: "fadeIn zoom:in",
+                    duration: 300
+                }
+            }
+
+
+        });
+        $(".btn").kendoButton();
+    })
 
     var count = document.getElementById("TableId").rows.length - 1;
 
